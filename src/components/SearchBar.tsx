@@ -27,17 +27,17 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="mb-5 flex gap-2">
+    <div className="mb-5 flex gap-2" role="search">
       <input
-        className="border-obGray flex-1 rounded-md border-2 bg-transparent p-3"
-        type="text"
+        className="flex-1 rounded-md border-2 border-obGray bg-transparent p-3"
+        type="search"
         placeholder="검색어를 입력하세요..."
         autoComplete="off"
         value={search}
         onChange={onChangeSearch}
         onKeyDown={onKeyDown}
       />
-      <button className="bg-obDarkGray w-20 rounded-md" onClick={onSubmit}>
+      <button className="w-20 rounded-md bg-obDarkGray" onClick={onSubmit}>
         검색
       </button>
     </div>
