@@ -1,15 +1,34 @@
+import { InferGetServerSidePropsType } from "next";
 import MovieItem from "@/components/MovieItem";
 import { ReactNode } from "react";
 import SearchableLayout from "@/components/SearchableLayout";
-import movies from "@/mock/movies.json";
+import fetchMovies from "@/lib/fetchMovies";
+import fetchRamdomMovies from "@/lib/fetchRandomMovies";
 
-export default function Home() {
+export const getServerSideProps = async () => {
+  const [allMovies, recoMovies] = await Promise.all([
+    fetchMovies(),
+    fetchRamdomMovies(),
+  ]);
+
+  return {
+    props: {
+      allMovies,
+      recoMovies,
+    },
+  };
+};
+
+export default function Home({
+  allMovies,
+  recoMovies,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div className="flex flex-col gap-12">
       <section>
         <h2 className="my-5 text-xl font-bold">지금 가장 추천하는 영화</h2>
         <ul className="grid grid-cols-3 gap-2">
-          {movies.slice(0, 3).map((movie) => (
+          {recoMovies.map((movie) => (
             <li key={movie.id}>
               <MovieItem {...movie} />
             </li>
@@ -19,7 +38,7 @@ export default function Home() {
       <section>
         <h2 className="my-5 text-xl font-bold">등록된 모든 영화</h2>
         <ul className="grid grid-cols-5 gap-x-2 gap-y-4">
-          {movies.map((movie) => (
+          {allMovies.map((movie) => (
             <li key={movie.id}>
               <MovieItem {...movie} />
             </li>
