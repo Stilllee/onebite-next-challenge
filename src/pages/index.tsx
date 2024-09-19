@@ -29,7 +29,7 @@ export default function Home({
         <h2 className="my-5 text-xl font-bold">지금 가장 추천하는 영화</h2>
         <ul className="grid grid-cols-3 gap-2">
           {recoMovies.map((movie) => (
-            <li key={movie.id}>
+            <li key={`recomovie-${movie.id}`}>
               <MovieItem {...movie} />
             </li>
           ))}
@@ -39,7 +39,7 @@ export default function Home({
         <h2 className="my-5 text-xl font-bold">등록된 모든 영화</h2>
         <ul className="grid grid-cols-5 gap-x-2 gap-y-4">
           {allMovies.map((movie) => (
-            <li key={movie.id}>
+            <li key={`allmovie-${movie.id}`}>
               <MovieItem {...movie} />
             </li>
           ))}
