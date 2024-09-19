@@ -1,11 +1,11 @@
-import { InferGetServerSidePropsType } from "next";
+import { InferGetStaticPropsType } from "next";
 import MovieItem from "@/components/MovieItem";
 import { ReactNode } from "react";
 import SearchableLayout from "@/components/SearchableLayout";
 import fetchMovies from "@/lib/fetchMovies";
 import fetchRamdomMovies from "@/lib/fetchRandomMovies";
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const [allMovies, recoMovies] = await Promise.all([
     fetchMovies(),
     fetchRamdomMovies(),
@@ -22,7 +22,7 @@ export const getServerSideProps = async () => {
 export default function Home({
   allMovies,
   recoMovies,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className="flex flex-col gap-12">
       <section>

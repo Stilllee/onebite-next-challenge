@@ -1,26 +1,26 @@
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import { ReactNode, useEffect, useState } from "react";
 
+import { MovieData } from "@/types";
 import MovieItem from "@/components/MovieItem";
-import { ReactNode } from "react";
 import SearchableLayout from "@/components/SearchableLayout";
 import fetchMovies from "@/lib/fetchMovies";
+import { useRouter } from "next/router";
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext,
-) => {
-  const { q } = context.query;
-  const searchMovies = await fetchMovies(q as string);
+export default function Page() {
+  const [searchMovies, setSearchMovies] = useState<MovieData[]>([]);
 
-  return {
-    props: {
-      searchMovies,
-    },
-  };
-};
+  const router = useRouter();
+  const { q } = router.query;
 
-export default function Page({
-  searchMovies,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  useEffect(() => {
+    const fetchSearchResult = async () => {
+      const data = await fetchMovies(q as string);
+      setSearchMovies(data);
+    };
+
+    if (q) fetchSearchResult();
+  }, [q]);
+
   return (
     <>
       <h2 className="sr-only">영화 검색 결과</h2>
