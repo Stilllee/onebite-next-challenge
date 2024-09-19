@@ -1,5 +1,6 @@
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 
+import { MovieData } from "@/types";
 import fetchMovies from "@/lib/fetchMovies";
 import fetchOneMovie from "@/lib/fetchOneMovie";
 
@@ -13,7 +14,7 @@ export const getStaticPaths = async () => {
         },
       };
     }),
-    fallback: true,
+    fallback: false,
   };
 };
 
@@ -23,7 +24,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   return {
     props: {
-      movie,
+      movie: movie as MovieData,
     },
   };
 };
@@ -31,8 +32,6 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 export default function Page({
   movie,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  if (!movie) return "문제가 발생했습니다. 다시 시도하세요.";
-
   const {
     title,
     releaseDate,
