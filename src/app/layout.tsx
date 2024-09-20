@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import Header from "./components/Header";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
@@ -20,8 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className={pretendard.className}>{children}</body>
+    <html lang="ko" className={pretendard.className}>
+      <body className="mx-auto max-w-4xl px-5">
+        <Header />
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
