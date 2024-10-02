@@ -1,9 +1,10 @@
 import { MovieData } from "@/types";
 import MovieItem from "../components/MovieItem";
-import movies from "@/mock/movies.json";
 
 async function AllMovies() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie`, {
+    cache: "force-cache",
+  });
   if (!res.ok) {
     return <p>오류가 발생했습니다.</p>;
   }
@@ -23,6 +24,9 @@ async function AllMovies() {
 async function RecoMovies() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/random`,
+    {
+      next: { revalidate: 3 },
+    },
   );
   if (!res.ok) {
     return <p>오류가 발생했습니다.</p>;
