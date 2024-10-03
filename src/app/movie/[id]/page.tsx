@@ -1,5 +1,15 @@
 import { MovieData } from "@/types";
 
+export async function generateStaticParams() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie`);
+  if (!res.ok) throw new Error("영화를 가져오지 못했습니다.");
+
+  const movies: MovieData[] = await res.json();
+  return movies.map((movie) => ({
+    id: movie.id.toString(),
+  }));
+}
+
 export default async function Page({
   params,
 }: {
