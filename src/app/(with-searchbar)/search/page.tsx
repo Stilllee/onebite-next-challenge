@@ -8,6 +8,9 @@ export default async function Page({
 }) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/search?q=${searchParams.q}`,
+    {
+      cache: "force-cache",
+    },
   );
   if (!res.ok) {
     return <p>오류가 발생했습니다.</p>;
