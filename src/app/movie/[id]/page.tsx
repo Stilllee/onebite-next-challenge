@@ -1,4 +1,7 @@
 import { MovieData } from "@/types";
+import { notFound } from "next/navigation";
+
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie`);
@@ -20,7 +23,7 @@ export default async function Page({
     { cache: "force-cache" },
   );
   if (!res.ok) {
-    <p>오류가 발생했습니다.</p>;
+    return <p>오류가 발생했습니다.</p>;
   }
 
   const {
