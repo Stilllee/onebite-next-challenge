@@ -1,4 +1,3 @@
-import BookItemSkeleton from "../components/skeleton/MovieItemSkeleton";
 import { MovieData } from "@/types";
 import MovieItem from "../components/MovieItem";
 import MovieListSkeleton from "../components/skeleton/MovieListSkeleton";
@@ -38,7 +37,7 @@ async function RecoMovies() {
 
   return (
     <ul className="grid grid-cols-3 gap-2">
-      {recoMovies.slice(0, 3).map((movie) => (
+      {recoMovies.map((movie) => (
         <li key={`recomovie-${movie.id}`}>
           <MovieItem {...movie} />
         </li>
