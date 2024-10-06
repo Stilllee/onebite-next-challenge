@@ -68,7 +68,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <div className="flex flex-col gap-14">
       <MovieDetail movieId={params.id} />
-      <ReviewEditor />
+      <ReviewEditor movieId={params.id} />
     </div>
   );
 }
