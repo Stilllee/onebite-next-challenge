@@ -1,5 +1,5 @@
 import { MovieData } from "@/types";
-import { notFound } from "next/navigation";
+import { ReviewEditor } from "@/app/components/ReviewEditor";
 
 export const dynamicParams = false;
 
@@ -13,13 +13,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { id: string | string[] };
-}) {
+async function MovieDetail({ bookId }: { bookId: string }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/${params.id}`,
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/${bookId}`,
     { cache: "force-cache" },
   );
   if (!res.ok) {
@@ -36,7 +32,6 @@ export default async function Page({
     runtime,
     posterImgUrl,
   }: MovieData = await res.json();
-
   return (
     <article className="flex flex-col gap-5">
       <div
@@ -66,5 +61,14 @@ export default async function Page({
         <p aria-label="영화 설명">{description}</p>
       </div>
     </article>
+  );
+}
+
+export default async function Page({ params }: { params: { id: string } }) {
+  return (
+    <div className="flex flex-col gap-14">
+      <MovieDetail bookId={params.id} />
+      <ReviewEditor />
+    </div>
   );
 }
