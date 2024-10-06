@@ -15,7 +15,7 @@ export async function ReviewEditor({ movieId }: { movieId: string }) {
         required
       />
       <div className="flex justify-end gap-3">
-        <input name="movieId" value={movieId} hidden />
+        <input name="movieId" value={movieId} hidden readOnly />
         <input
           className="rounded-md border border-obGray bg-transparent p-3"
           type="text"
