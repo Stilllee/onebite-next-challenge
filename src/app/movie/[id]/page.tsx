@@ -13,9 +13,9 @@ export async function generateStaticParams() {
   }));
 }
 
-async function MovieDetail({ bookId }: { bookId: string }) {
+async function MovieDetail({ movieId }: { movieId: string }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/${bookId}`,
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/${movieId}`,
     { cache: "force-cache" },
   );
   if (!res.ok) {
@@ -67,7 +67,7 @@ async function MovieDetail({ bookId }: { bookId: string }) {
 export default async function Page({ params }: { params: { id: string } }) {
   return (
     <div className="flex flex-col gap-14">
-      <MovieDetail bookId={params.id} />
+      <MovieDetail movieId={params.id} />
       <ReviewEditor />
     </div>
   );
