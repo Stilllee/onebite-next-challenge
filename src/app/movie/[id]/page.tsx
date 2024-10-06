@@ -1,5 +1,6 @@
 import { MovieData } from "@/types";
 import { ReviewEditor } from "@/app/components/ReviewEditor";
+import ReviewItem from "@/app/components/ReviewItem";
 
 export const dynamicParams = false;
 
@@ -46,6 +47,7 @@ async function MovieDetail({ movieId }: { movieId: string }) {
         />
       </div>
       <h2 className="text-xl font-bold">{title}</h2>
+      <h3 className="sr-only">영화 상세 정보</h3>
       <div className="space-y-2 opacity-50">
         <p>
           <time aria-label="개봉일" dateTime={releaseDate}>
@@ -57,10 +59,21 @@ async function MovieDetail({ movieId }: { movieId: string }) {
         <p aria-label="제작사">{company}</p>
       </div>
       <div className="space-y-2">
-        <h3 className="text-lg font-bold">{subTitle}</h3>
+        <strong className="text-lg font-bold">{subTitle}</strong>
         <p aria-label="영화 설명">{description}</p>
       </div>
     </article>
+  );
+}
+
+async function ReviewList() {
+  return (
+    <ul>
+      <h3 className="sr-only">리뷰 목록</h3>
+      <ReviewItem />
+      <ReviewItem />
+      <ReviewItem />
+    </ul>
   );
 }
 
@@ -69,6 +82,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <div className="flex flex-col gap-14">
       <MovieDetail movieId={params.id} />
       <ReviewEditor movieId={params.id} />
+      <ReviewList />
     </div>
   );
 }

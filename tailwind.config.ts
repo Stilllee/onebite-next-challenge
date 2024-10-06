@@ -12,6 +12,7 @@ const config: Config = {
         obRed: "#e50914",
         obGray: "#646464",
         obDarkGray: "#434343",
+        obDarkLine: "#1e1e1e",
       },
     },
   },
