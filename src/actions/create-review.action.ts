@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
+
 export async function createRevieAction(formData: FormData) {
   const movieId = formData.get("movieId")?.toString();
   const content = formData.get("content")?.toString();
@@ -19,6 +21,7 @@ export async function createRevieAction(formData: FormData) {
         }),
       },
     );
+    revalidateTag(`review-${movieId}`);
   } catch (error) {
     console.error(error);
     return;
