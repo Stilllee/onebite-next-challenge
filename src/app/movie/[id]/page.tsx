@@ -1,4 +1,5 @@
-import { MovieData } from "@/types";
+import { MovieData, ReviewData } from "@/types";
+
 import { ReviewEditor } from "@/app/components/ReviewEditor";
 import ReviewItem from "@/app/components/ReviewItem";
 
@@ -50,10 +51,9 @@ async function MovieDetail({ movieId }: { movieId: string }) {
       <h3 className="sr-only">영화 상세 정보</h3>
       <div className="space-y-2 opacity-50">
         <p>
-          <time aria-label="개봉일" dateTime={releaseDate}>
-            {releaseDate}
-          </time>{" "}
-          / <span aria-label="장르">{genres.join(", ")}</span> /{" "}
+          <span className="sr-only">개봉일: </span>
+          <time dateTime={releaseDate}>{releaseDate}</time> /{" "}
+          <span aria-label="장르">{genres.join(", ")}</span> /{" "}
           <span aria-label="상영 시간">{runtime}분</span>
         </p>
         <p aria-label="제작사">{company}</p>
@@ -66,13 +66,23 @@ async function MovieDetail({ movieId }: { movieId: string }) {
   );
 }
 
-async function ReviewList() {
+async function ReviewList({ movieId }: { movieId: string }) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/movie/${movieId}`,
+  );
+
+  if (!res.ok) {
+    throw new Error(`리뷰를 가져오지 못했습니다.: ${res.statusText}`);
+  }
+
+  const reviews: ReviewData[] = await res.json();
+
   return (
     <ul>
       <h3 className="sr-only">리뷰 목록</h3>
-      <ReviewItem />
-      <ReviewItem />
-      <ReviewItem />
+      {reviews.map((review) => (
+        <ReviewItem key={`review-item-${review.id}`} {...review} />
+      ))}
     </ul>
   );
 }
@@ -82,7 +92,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <div className="flex flex-col gap-14">
       <MovieDetail movieId={params.id} />
       <ReviewEditor movieId={params.id} />
-      <ReviewList />
+      <ReviewList movieId={params.id} />
     </div>
   );
 }
