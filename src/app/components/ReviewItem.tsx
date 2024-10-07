@@ -19,7 +19,7 @@ export default function ReviewItem({ author, createdAt, content }: ReviewData) {
         </div>
         <p>{content}</p>
         <button
-          className="w-fit border-obGray text-obGray hover:border-b"
+          className="w-fit border-b border-transparent text-obGray transition-colors hover:border-obGray"
           aria-label="이 리뷰 삭제하기"
         >
           삭제하기
