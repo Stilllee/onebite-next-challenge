@@ -1,10 +1,17 @@
 import { ReviewData } from "@/types";
+import ReviewItemDeleteButton from "./ReviewItemDeleteButton";
 
 const formatDate = (dateString: string): string => {
   return dateString.split("T")[0].replace(/-/g, ".");
 };
 
-export default function ReviewItem({ author, createdAt, content }: ReviewData) {
+export default function ReviewItem({
+  author,
+  createdAt,
+  content,
+  id,
+  movieId,
+}: ReviewData) {
   return (
     <li className="mb-8 border-b-2 border-obDarkLine pb-8">
       <article className="flex flex-col gap-4">
@@ -18,12 +25,7 @@ export default function ReviewItem({ author, createdAt, content }: ReviewData) {
           </div>
         </div>
         <p>{content}</p>
-        <button
-          className="w-fit border-b border-transparent text-obGray transition-colors hover:border-obGray"
-          aria-label="이 리뷰 삭제하기"
-        >
-          삭제하기
-        </button>
+        <ReviewItemDeleteButton reviewId={id} movieId={movieId} />
       </article>
     </li>
   );
