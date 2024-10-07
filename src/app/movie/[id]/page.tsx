@@ -49,7 +49,7 @@ async function MovieDetail({ movieId }: { movieId: string }) {
       </div>
       <h2 className="text-xl font-bold">{title}</h2>
       <h3 className="sr-only">영화 상세 정보</h3>
-      <div className="space-y-2 opacity-50">
+      <section className="space-y-2 opacity-50">
         <p>
           <span className="sr-only">개봉일: </span>
           <time dateTime={releaseDate}>{releaseDate}</time> /{" "}
@@ -57,11 +57,11 @@ async function MovieDetail({ movieId }: { movieId: string }) {
           <span aria-label="상영 시간">{runtime}분</span>
         </p>
         <p aria-label="제작사">{company}</p>
-      </div>
-      <div className="space-y-2">
-        <strong className="text-lg font-bold">{subTitle}</strong>
-        <p aria-label="영화 설명">{description}</p>
-      </div>
+      </section>
+      <section className="space-y-2">
+        <h4 className="text-lg font-bold">{subTitle}</h4>
+        <p>{description}</p>
+      </section>
     </article>
   );
 }
@@ -78,12 +78,14 @@ async function ReviewList({ movieId }: { movieId: string }) {
   const reviews: ReviewData[] = await res.json();
 
   return (
-    <ul>
+    <section>
       <h3 className="sr-only">리뷰 목록</h3>
-      {reviews.map((review) => (
-        <ReviewItem key={`review-item-${review.id}`} {...review} />
-      ))}
-    </ul>
+      <ul>
+        {reviews.map((review) => (
+          <ReviewItem key={`review-item-${review.id}`} {...review} />
+        ))}
+      </ul>
+    </section>
   );
 }
 

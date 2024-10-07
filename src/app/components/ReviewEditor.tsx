@@ -7,21 +7,27 @@ export async function ReviewEditor({ movieId }: { movieId: string }) {
       action={createRevieAction}
       aria-label="영화 리뷰 작성"
     >
+      <label htmlFor="review-content" className="sr-only">
+        리뷰 내용
+      </label>
       <textarea
         className="min-h-28 w-full resize-y rounded-md border border-obGray bg-transparent p-3"
+        id="review-content"
         name="content"
         placeholder="리뷰 내용"
-        aria-label="리뷰 내용"
         required
       />
       <div className="flex justify-end gap-3">
         <input name="movieId" value={movieId} hidden readOnly />
+        <label htmlFor="author-name" className="sr-only">
+          작성자
+        </label>
         <input
           className="rounded-md border border-obGray bg-transparent p-3"
+          id="author-name"
           type="text"
           name="author"
           placeholder="작성자"
-          aria-label="작성자"
           required
         />
         <button
