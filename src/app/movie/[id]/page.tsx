@@ -1,6 +1,7 @@
 import { MovieData, ReviewData } from "@/types";
 
 import Image from "next/image";
+import { Metadata } from "next";
 import { ReviewEditor } from "@/app/components/ReviewEditor";
 import ReviewItem from "@/app/components/ReviewItem";
 
@@ -95,7 +96,35 @@ async function ReviewList({ movieId }: { movieId: string }) {
   );
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+type PropsType = {
+  params: {
+    id: string;
+  };
+};
+
+export async function generateMetadata({
+  params,
+}: PropsType): Promise<Metadata | null> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/${params.id}`,
+    { cache: "force-cache" },
+  );
+  if (!res.ok) throw new Error(res.statusText);
+
+  const movie: MovieData = await res.json();
+
+  return {
+    title: `${movie.title} - 한입 시네마`,
+    description: `${movie.description}`,
+    openGraph: {
+      title: `${movie.title} - 한입 시네마`,
+      description: `${movie.description}`,
+      images: [movie.posterImgUrl],
+    },
+  };
+}
+
+export default async function Page({ params }: PropsType) {
   return (
     <div className="flex flex-col gap-14">
       <MovieDetail movieId={params.id} />

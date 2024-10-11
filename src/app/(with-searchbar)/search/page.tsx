@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { MovieData } from "@/types";
 import MovieItem from "@/app/components/MovieItem";
 import MovieListSkeleton from "@/app/components/skeleton/MovieListSkeleton";
@@ -27,11 +28,25 @@ async function SearchResult({ q }: { q: string }) {
   );
 }
 
-export default function Page({
-  searchParams,
-}: {
-  searchParams: { q?: string };
-}) {
+type PropsType = {
+  searchParams: {
+    q?: string;
+  };
+};
+
+export function generateMetadata({ searchParams }: PropsType): Metadata {
+  return {
+    title: `${searchParams.q} : 한입 시네마 검색`,
+    description: `${searchParams.q}의 검색 결과입니다`,
+    openGraph: {
+      title: `${searchParams.q} : 한입 시네마 검색`,
+      description: `${searchParams.q}의 검색 결과입니다`,
+      images: ["/thumbnail.png"],
+    },
+  };
+}
+
+export default function Page({ searchParams }: PropsType) {
   return (
     <>
       <h2 className="sr-only">영화 검색 결과</h2>

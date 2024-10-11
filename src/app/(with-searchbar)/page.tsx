@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { MovieData } from "@/types";
 import MovieItem from "../components/MovieItem";
 import MovieListSkeleton from "../components/skeleton/MovieListSkeleton";
@@ -47,6 +48,16 @@ async function RecoMovies() {
 }
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "한입 시네마",
+  description: "한입 시네마에 등록된 다양한 영화들을 만나보세요",
+  openGraph: {
+    title: "한입 시네마",
+    description: "한입 시네마에 등록된 다양한 영화들을 만나보세요",
+    images: ["/thumbnail.png"],
+  },
+};
 
 export default function Home() {
   return (
