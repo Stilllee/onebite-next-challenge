@@ -1,5 +1,6 @@
 import { MovieData, ReviewData } from "@/types";
 
+import Image from "next/image";
 import { ReviewEditor } from "@/app/components/ReviewEditor";
 import ReviewItem from "@/app/components/ReviewItem";
 
@@ -37,15 +38,19 @@ async function MovieDetail({ movieId }: { movieId: string }) {
   return (
     <article className="flex flex-col gap-5">
       <div
-        className="before:content-[' relative flex justify-center rounded-md bg-cover bg-center bg-no-repeat p-5 before:absolute before:inset-0 before:bg-black before:bg-opacity-70"
+        className="before:content-[' relative flex h-96 justify-center rounded-md bg-cover bg-center bg-no-repeat p-5 before:absolute before:inset-0 before:bg-black before:bg-opacity-70"
         style={{ backgroundImage: `url('${posterImgUrl})` }}
         aria-hidden
       >
-        <img
-          className="relative z-10 h-full max-h-96 rounded-md"
-          src={posterImgUrl}
-          alt={`${title} 포스터`}
-        />
+        <figure className="relative z-10 h-full w-full">
+          <Image
+            className="object-contain"
+            src={posterImgUrl}
+            alt={`${title} 포스터`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </figure>
       </div>
       <h2 className="text-xl font-bold">{title}</h2>
       <h3 className="sr-only">영화 상세 정보</h3>
