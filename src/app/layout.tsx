@@ -2,6 +2,7 @@ import "./globals.css";
 
 import Header from "./components/Header";
 import type { Metadata } from "next";
+import { ReactNode } from "react";
 import localFont from "next/font/local";
 
 const pretendard = localFont({
@@ -17,14 +18,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
+  modal: ReactNode;
 }>) {
   return (
     <html lang="ko" className={pretendard.className}>
       <body className="mx-auto max-w-4xl px-5">
         <Header />
         <main>{children}</main>
+        {modal}
+        <div id="modal-root"></div>
       </body>
     </html>
   );
